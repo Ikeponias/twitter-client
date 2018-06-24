@@ -4,6 +4,8 @@ import { NavigationActions, StackActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Constants } from "expo";
 
+import { tokenSet, userSet } from '../actions/index'
+
 /* import twitter */
 import twitter, {
   TWLoginButton,
@@ -11,10 +13,7 @@ import twitter, {
   getRelativeTime
 } from "react-native-simple-twitter";
 
-@connect(state => ({
-  user: state.user
-}))
-export default class LoginScreen extends React.Component {
+export class LoginScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { state, setParams } = navigation;
     const { params = {} } = navigation.state;
@@ -54,14 +53,16 @@ export default class LoginScreen extends React.Component {
           skip_status: true,
           include_email: true
         });
-        this.props.dispatch({ type: "USER_SET", user: user });
+        this.props.userSet(user)
 
+        this.props.navigation.navigate("TwitterHome")
+        /*
         this.props.dispatch(
           StackActions.reset({
             index: 0,
             actions: [NavigationActions.navigate({ routeName: "TwitterHome" })]
           })
-        );
+        );*/
       } catch (err) {
         console.log(err);
       }
@@ -69,22 +70,23 @@ export default class LoginScreen extends React.Component {
   }
 
   onGetAccessToken = ({ oauth_token, oauth_token_secret }) => {
-    this.props.dispatch({
-      type: "TOKEN_SET",
+    this.props.tokenSet({
       token: oauth_token,
       token_secret: oauth_token_secret
     });
   };
 
   onSuccess = user => {
-    this.props.dispatch({ type: "USER_SET", user: user });
+    this.props.userSet(user);
 
+    this.props.navigation.navigate("TwitterHome")
+    /*
     this.props.dispatch(
       StackActions.reset({
         index: 0,
         actions: [NavigationActions.navigate({ routeName: "TwitterHome" })]
       })
-    );
+    );*/
   };
 
   onPress = e => {
@@ -114,7 +116,14 @@ export default class LoginScreen extends React.Component {
           onClose={this.onClose}
           onError={this.onError}
         >
-          <Text style={{ marginTop: 10, textAlign: "center", fontSize: 20, color: "#fff" }}>
+          <Text
+            style={{
+              marginTop: 10,
+              textAlign: "center",
+              fontSize: 20,
+              color: "#fff"
+            }}
+          >
             Twitterでログインする
           </Text>
         </TWLoginButton>
@@ -123,10 +132,25 @@ export default class LoginScreen extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  user: state.user,
+  nav: state.nav
+});
+
+const mapDispatchToProps = {
+  tokenSet,
+  userSet
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginScreen);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1DA1F2",
+    backgroundColor: "#1DA1F2"
   },
   title: {
     flex: 1,

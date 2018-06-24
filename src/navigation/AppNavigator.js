@@ -1,12 +1,11 @@
-import React from "react";
-import { AppState } from "react-native";
-import { connect } from "react-redux";
-import { StackNavigator, NavigationActions } from "react-navigation";
-import { createReduxBoundAddListener } from "react-navigation-redux-helpers";
-
-/* screen */
+import React, { Component } from "react";
+import { StackNavigator } from "react-navigation";
+import {
+  createReduxBoundAddListener
+} from "react-navigation-redux-helpers";
 import LoginScreen from "../screens/LoginScreen";
 import TwitterScreen from "../screens/TwitterScreen";
+import { connect } from "react-redux";
 
 /* AppNavigator */
 export const AppNavigator = StackNavigator({
@@ -14,35 +13,19 @@ export const AppNavigator = StackNavigator({
   TwitterHome: { screen: TwitterScreen }
 });
 
-const navigateOnce = getStateForAction => (action, state) => {
-  const { type, routeName } = action;
-  return state &&
-    type === NavigationActions.NAVIGATE &&
-    routeName === state.routes[state.routes.length - 1].routeName
-    ? null
-    : getStateForAction(action, state);
-};
-
-AppNavigator.router.getStateForAction = navigateOnce(
-  AppNavigator.router.getStateForAction
-);
-
-/* AppWithNavigationState */
-@connect(state => ({
-  nav: state.nav
-}))
-export default class AppWithNavigationState extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+export class AppNavigatorwithHelper extends Component {
   render() {
     const helper = {
-      dispatch: this.props.dispatch,
       state: this.props.nav,
+      dispatch: this.props.dispatch,
       addListener: createReduxBoundAddListener("root")
     };
-
     return <AppNavigator navigation={helper} />;
   }
 }
+
+const mapStateToProps = state => ({
+  nav: state.nav
+});
+
+export default connect(mapStateToProps)(AppNavigatorwithHelper);
