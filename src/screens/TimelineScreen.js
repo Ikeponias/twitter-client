@@ -38,7 +38,7 @@ export default class TimelineScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.getTweet();
+    this.getTimeline();
   }
 
   renderLoadingView() {
@@ -58,8 +58,8 @@ export default class TimelineScreen extends React.Component {
     }))
   }
 
-  getTweet() {
-    twitter.get('statuses/home_timeline.json', this.getParams)
+  getTimeline() {
+    twitter.get('statuses/home_timeline.json')
       .then((responseTweets) => {
         console.log(responseTweets)
         this.setState({
@@ -70,8 +70,8 @@ export default class TimelineScreen extends React.Component {
       .catch((error) => console.log(error));
   }
 
-
   render() {
+    console.log(this.state.items)
     return (
       this.state.loaded ?
         <TweetsListComponent
