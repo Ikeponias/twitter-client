@@ -1,10 +1,9 @@
 import React from "react";
-import { View, Text, Alert, StyleSheet } from "react-native";
+import { View, Text, Alert, StyleSheet, AsyncStorage } from "react-native";
 import { NavigationActions, StackActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Constants } from "expo";
-
-import { tokenSet, userSet } from '../actions/index'
+import { tokenSet, userSet, fetchToken } from "../actions/index";
 
 /* import twitter */
 import twitter, {
@@ -12,6 +11,22 @@ import twitter, {
   decodeHTMLEntities,
   getRelativeTime
 } from "react-native-simple-twitter";
+
+const storeData = (key, value) => {
+  try {
+    AsyncStorage.setItem(key, value);
+  } catch (error) {
+    console.log("error: %o", error);
+  }
+};
+
+const fetchData = async key => {
+  try {
+    return await AsyncStorage.multiGet(key);
+  } catch (error) {
+    console.log("error: %o", error);
+  }
+};
 
 export class LoginScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -40,8 +55,32 @@ export class LoginScreen extends React.Component {
     console.log(getRelativeTime("Thu Apr 06 15:28:43 +0000 2017"));
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
+    fetchData(["@UserToken:key", "@UserTokenSecret:key"]).then(async (stores) => {
+      twitter.setAccessToken(
+        stores[0][1],
+        stores[1][1]
+      );
+
+      try {
+        const user = await twitter.get("account/verify_credentials.json", {
+          include_entities: false,
+          skip_status: true,
+          include_email: true
+        });
+        this.props.userSet(user);
+
+        this.props.navigation.navigate("TwitterHome");
+      } catch (err) {
+        console.log(err);
+      }
+    })
+
+    console.log('user: %o', this.props.user);
+      /*
     if (this.props.user.token) {
+      console.log('user: %o', this.props.user);
+
       twitter.setAccessToken(
         this.props.user.token,
         this.props.user.token_secret
@@ -53,40 +92,39 @@ export class LoginScreen extends React.Component {
           skip_status: true,
           include_email: true
         });
-        this.props.userSet(user)
+        this.props.userSet(user);
 
-        this.props.navigation.navigate("TwitterHome")
-        /*
-        this.props.dispatch(
-          StackActions.reset({
-            index: 0,
-            actions: [NavigationActions.navigate({ routeName: "TwitterHome" })]
-          })
-        );*/
+        this.props.navigation.navigate("TwitterHome");
       } catch (err) {
         console.log(err);
       }
     }
+    */
   }
 
   onGetAccessToken = ({ oauth_token, oauth_token_secret }) => {
-    this.props.tokenSet({
-      token: oauth_token,
-      token_secret: oauth_token_secret
-    });
+    console.log("maintoken: %o", oauth_token);
+    console.log("maintokensecret: %o", oauth_token_secret);
+    this.props.tokenSet(
+      {
+        token: oauth_token
+      },
+      {
+        tokenSecret: oauth_token_secret
+      }
+    );
+
+    storeData(
+      "@UserToken:key", oauth_token
+    );
+    storeData(
+      "@UserTokenSecret:key", oauth_token_secret
+    );
   };
 
   onSuccess = user => {
     this.props.userSet(user);
-
-    this.props.navigation.navigate("TwitterHome")
-    /*
-    this.props.dispatch(
-      StackActions.reset({
-        index: 0,
-        actions: [NavigationActions.navigate({ routeName: "TwitterHome" })]
-      })
-    );*/
+    this.props.navigation.navigate("TwitterHome");
   };
 
   onPress = e => {
@@ -139,7 +177,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   tokenSet,
-  userSet
+  userSet,
+  fetchToken
 };
 
 export default connect(
