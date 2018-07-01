@@ -1,40 +1,33 @@
-import React from 'react'
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet
-} from 'react-native'
-import { connect } from 'react-redux'
-import { NavigationActions, StackActions } from 'react-navigation'
-import TweetsListComponent from '../components/TweetsListComponent';
+import React from "react";
+import { View, Text, FlatList, RefreshControl } from "react-native";
+import { connect } from "react-redux";
+import { NavigationActions, StackActions } from "react-navigation";
+import TweetComponent from "../components/TweetComponent";
 
 /* import twitter */
-import twitter from 'react-native-simple-twitter'
+import twitter from "react-native-simple-twitter";
 
-@connect(
-  state => ({
-    user: state.user
-  })
-)
-
+@connect(state => ({
+  user: state.user
+}))
 export default class TimelineScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
-    const { state, setParams } = navigation
-    const { params = {} } = navigation.state
+    const { state, setParams } = navigation;
+    const { params = {} } = navigation.state;
 
     return {
       headerTitle: "タイムライン"
-    }
-  }
+    };
+  };
 
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       items: null,
       loaded: false,
-    }
+      refreshing: false,
+    };
   }
 
   componentDidMount() {
@@ -42,43 +35,49 @@ export default class TimelineScreen extends React.Component {
   }
 
   renderLoadingView() {
-    return (
-      <Text>
-        Loading Tweets...
-      </Text>
-    );
+    return <Text>Loading Tweets...</Text>;
   }
 
-  onButtonPress = (e) => {
-    this.props.dispatch(StackActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: 'Post' })
-      ]
-    }))
-  }
+  onButtonPress = e => {
+    this.props.dispatch(
+      StackActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({ routeName: "Post" })]
+      })
+    );
+  };
 
   getTimeline() {
-    twitter.get('statuses/home_timeline.json')
-      .then((responseTweets) => {
-        console.log(responseTweets)
+    this.setState({ refreshing: true })
+    twitter
+      .get("statuses/home_timeline.json")
+      .then(responseTweets => {
+        console.log(responseTweets);
         this.setState({
           items: responseTweets,
           loaded: true,
+          refreshing: false
         });
       })
-      .catch((error) => console.log(error));
+      .catch(error => console.log(error));
   }
 
+  _keyExtractor = (item, index) => item.id.toString();
+
   render() {
-    console.log(this.state.items)
-    return (
-      this.state.loaded ?
-        <TweetsListComponent
-          data={this.state.items}
-          navigator={this.props.navigator}
-        /> :
-        this.renderLoadingView()
+    console.log('items: %o', this.state.items)
+    return this.state.loaded ? (
+      <FlatList
+        data={this.state.items}
+        extraData={this.state.items}
+        keyExtractor={this._keyExtractor}
+        renderItem={({ item }) => <TweetComponent item={item} />}
+        refreshControl={
+          <RefreshControl refreshing={this.state.refreshing} onRefresh={this.getTimeline.bind(this)} />
+        }
+      />
+    ) : (
+      this.renderLoadingView()
     );
   }
 }
