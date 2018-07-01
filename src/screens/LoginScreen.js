@@ -68,38 +68,17 @@ export class LoginScreen extends React.Component {
           skip_status: true,
           include_email: true
         });
-        this.props.userSet(user);
 
-        this.props.navigation.navigate("TwitterHome");
+        if (user.id) {
+          this.props.userSet(user);
+          this.props.navigation.navigate("TwitterHome");
+        }
       } catch (err) {
         console.log(err);
       }
     })
 
     console.log('user: %o', this.props.user);
-      /*
-    if (this.props.user.token) {
-      console.log('user: %o', this.props.user);
-
-      twitter.setAccessToken(
-        this.props.user.token,
-        this.props.user.token_secret
-      );
-
-      try {
-        const user = await twitter.get("account/verify_credentials.json", {
-          include_entities: false,
-          skip_status: true,
-          include_email: true
-        });
-        this.props.userSet(user);
-
-        this.props.navigation.navigate("TwitterHome");
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    */
   }
 
   onGetAccessToken = ({ oauth_token, oauth_token_secret }) => {
