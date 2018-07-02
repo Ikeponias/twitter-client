@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 import { Image } from "react-native";
-import { Thumbnail } from "native-base";
+import {
+  Card,
+  CardItem,
+  Thumbnail,
+  Text,
+  Button,
+  Icon,
+  Left,
+  Body
+} from "native-base";
 import styled from "styled-components";
 
 const TweetCard = styled.View`
@@ -42,40 +51,49 @@ export default class TweetComponent extends Component {
     const { item } = this.props;
 
     return (
-      <TweetCard>
-        <TweetUserThumbnail source={{ uri: item.user.profile_image_url }} />
-        {item.retweeted_status && (
-          <TweetUserThumbnail
-            source={{ uri: item.retweeted_status.user.profile_image_url }}
-          />
-        )}
-
-        <TweetBody>
-          <TweetText>{item.text}</TweetText>
-          <TweetText>retweet_count:{item.retweet_count}</TweetText>
-          <TweetUserName>{item.user.name}</TweetUserName>
-          {item.retweeted_status && (
-            <TweetText>
-              元ツイートユーザ:{item.retweeted_status.user.name}
-            </TweetText>
-          )}
-          {item.entities.media && (item.entities.media.map((m) => {
-            return (
-              <TweetText>メディアURL:{m.media_url_https}</TweetText>
-            );
-          }
-          ))}
-          {item.entities.media && item.entities.media.map((m) => {
-            return (
-              <Image
-                style={{ width: 200, height: 200 }}
-                source={{ uri: m.media_url_https }}
+      <Card style={{ flex: 0 }}>
+        <CardItem>
+          <Left>
+            <Thumbnail source={{ uri: item.user.profile_image_url }} />
+            {item.retweeted_status && (
+              <Thumbnail
+                source={{
+                  uri: item.retweeted_status.user.profile_image_url
+                }}
               />
-            );
-          }
-          )}
-        </TweetBody>
-      </TweetCard>
+            )}
+            <Body>
+              <Text>{item.user.name}</Text>
+              {item.retweeted_status && (
+                <Text>元ツイートユーザ{item.retweeted_status.user.name}</Text>
+              )}
+              <Text note>ここにTime</Text>
+            </Body>
+          </Left>
+        </CardItem>
+        <CardItem>
+          <Body>
+            {item.entities.media &&
+              item.entities.media.map(m => {
+                return (
+                  <Image
+                    style={{ width: 200, height: 200 }}
+                    source={{ uri: m.media_url_https }}
+                  />
+                );
+              })}
+            <Text>{item.text}</Text>
+          </Body>
+        </CardItem>
+        <CardItem>
+          <Left>
+            <Button transparent textStyle={{ color: "#87838B" }}>
+              <Icon type="FontAwesome" name="retweet" />
+              <Text>{item.retweet_count} retweets</Text>
+            </Button>
+          </Left>
+        </CardItem>
+      </Card>
     );
   }
 }
