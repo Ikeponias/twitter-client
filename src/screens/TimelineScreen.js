@@ -1,15 +1,14 @@
 import React from "react";
-import { View, Text, FlatList, RefreshControl } from "react-native";
+import { Text, FlatList, RefreshControl } from "react-native";
 import { connect } from "react-redux";
 import { NavigationActions, StackActions } from "react-navigation";
 import TweetComponent from "../components/TweetComponent";
 
-/* import twitter */
 import twitter from "react-native-simple-twitter";
 
-@connect(state => ({
+connect(state => ({
   user: state.user
-}))
+}));
 export default class TimelineScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { state, setParams } = navigation;
@@ -26,7 +25,7 @@ export default class TimelineScreen extends React.Component {
     this.state = {
       items: null,
       loaded: false,
-      refreshing: false,
+      refreshing: false
     };
   }
 
@@ -48,7 +47,7 @@ export default class TimelineScreen extends React.Component {
   };
 
   getTimeline() {
-    this.setState({ refreshing: true })
+    this.setState({ refreshing: true });
     twitter
       .get("statuses/home_timeline.json")
       .then(responseTweets => {
@@ -65,7 +64,7 @@ export default class TimelineScreen extends React.Component {
   _keyExtractor = (item, index) => item.id.toString();
 
   render() {
-    console.log('items: %o', this.state.items)
+    console.log("items: %o", this.state.items);
     return this.state.loaded ? (
       <FlatList
         data={this.state.items}
@@ -73,7 +72,10 @@ export default class TimelineScreen extends React.Component {
         keyExtractor={this._keyExtractor}
         renderItem={({ item }) => <TweetComponent item={item} />}
         refreshControl={
-          <RefreshControl refreshing={this.state.refreshing} onRefresh={this.getTimeline.bind(this)} />
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this.getTimeline.bind(this)}
+          />
         }
       />
     ) : (

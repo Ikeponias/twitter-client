@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { StackNavigator } from "react-navigation";
-import {
-  createReduxBoundAddListener
-} from "react-navigation-redux-helpers";
+import { createReduxBoundAddListener } from "react-navigation-redux-helpers";
 import LoginScreen from "../screens/LoginScreen";
 import TwitterScreen from "../screens/TwitterScreen";
 import { connect } from "react-redux";

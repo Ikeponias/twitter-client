@@ -1,45 +1,35 @@
-import React from 'react'
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  Alert,
-  StyleSheet
-} from 'react-native'
-import { connect } from 'react-redux'
+import React from "react";
+import { StyleSheet } from "react-native";
+import { connect } from "react-redux";
+import twitter from "react-native-simple-twitter";
 
-/* import twitter */
-import twitter from 'react-native-simple-twitter'
+import PostTweetComponent from "../components/PostTweetComponent";
 
-import PostTweetComponent from '../components/PostTweetComponent';
-
-@connect(
-  state => ({
-    user: state.user
-  })
-)
+connect(state => ({
+  user: state.user
+}));
 export default class PostScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
-    const { state, setParams } = navigation
-    const { params = {} } = navigation.state
-  }
+    const { state, setParams } = navigation;
+    const { params = {} } = navigation.state;
+  };
 
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   postTweet(text) {
     const postParams = {
-      status: "API投稿テスト",
-    }
+      status: "API投稿テスト"
+    };
 
     postParams.status = text;
-    twitter.post('statuses/update.json', postParams)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => console.log(error));
+    twitter
+      .post("statuses/update.json", postParams)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => console.log(error));
   }
 
   render() {
@@ -59,7 +49,7 @@ export default class PostScreen extends React.Component {
         </View>
       </View>
       */
-    )
+    );
   }
 }
 
@@ -75,11 +65,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
     fontWeight: "bold",
-    marginBottom: 16,
+    marginBottom: 16
   },
   description: {
     fontSize: 16,
-    marginBottom: 16,
+    marginBottom: 16
   },
   button: {
     backgroundColor: "#1da1f2",
@@ -90,4 +80,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#fff"
   }
-})
+});

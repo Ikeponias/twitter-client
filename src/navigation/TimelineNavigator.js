@@ -1,5 +1,3 @@
-import React from "react";
-import { View, Text } from "react-native";
 import { createStackNavigator } from "react-navigation";
 
 import TimelineScreen from "../screens/TimelineScreen";
@@ -14,7 +12,7 @@ const TimelineNavigator = createStackNavigator({
       },
       headerTitleStyle: {
         color: "white"
-      },
+      }
     }
   }
 });

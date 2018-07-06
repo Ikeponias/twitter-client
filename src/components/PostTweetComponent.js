@@ -1,14 +1,5 @@
 import React, { Component } from "react";
-import {
-  Container,
-  Content,
-  Textarea,
-  Input,
-  Form,
-  Button,
-  Text
-} from "native-base";
-import twitter, { auth } from "react-native-twitter";
+import { Container, Content, Input, Form, Button, Text } from "native-base";
 import styled from "styled-components";
 
 const TweetInput = styled(Input)`
@@ -45,8 +36,8 @@ export default class PostTweetContainer extends Component {
             <TweetInput
               multiline={true}
               numberOfLines={4}
-              placeholder='ツイートを書く'
-              placeholderTextColor='#C7C7CD'
+              placeholder="ツイートを書く"
+              placeholderTextColor="#C7C7CD"
               onChangeText={text => this.setState({ text })}
             />
             <Button block onPress={onPress.bind(this, text)}>

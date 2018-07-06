@@ -10,37 +10,6 @@ import {
   Left,
   Body
 } from "native-base";
-import styled from "styled-components";
-
-const TweetCard = styled.View`
-  border-width: 0.5;
-`;
-
-const TweetUserThumbnail = styled(Thumbnail)`
-  width: 40px;
-  height: 40px;
-`;
-
-const RetweetedUserThumbnail = styled(Thumbnail)`
-  width: 40px;
-  height: 40px;
-  margin-top: -20px;
-  margin-right: 20px;
-`;
-
-const TweetBody = styled.View``;
-
-const TweetText = styled.Text`
-  font-size: 15px;
-  margin: 10px;
-  text-align: left;
-`;
-
-const TweetUserName = styled.Text`
-  font-size: 15px;
-  margin: 10px;
-  text-align: right;
-`;
 
 export default class TweetComponent extends Component {
   constructor(props) {

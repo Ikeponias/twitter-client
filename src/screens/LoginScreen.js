@@ -1,11 +1,8 @@
 import React from "react";
-import { View, Text, Alert, StyleSheet, AsyncStorage } from "react-native";
-import { NavigationActions, StackActions } from "react-navigation";
+import { View, Text, StyleSheet, AsyncStorage } from "react-native";
 import { connect } from "react-redux";
-import { Constants } from "expo";
 import { tokenSet, userSet, fetchToken } from "../actions/index";
 
-/* import twitter */
 import twitter, {
   TWLoginButton,
   decodeHTMLEntities,
@@ -56,11 +53,8 @@ export class LoginScreen extends React.Component {
   }
 
   async componentDidMount() {
-    fetchData(["@UserToken:key", "@UserTokenSecret:key"]).then(async (stores) => {
-      twitter.setAccessToken(
-        stores[0][1],
-        stores[1][1]
-      );
+    fetchData(["@UserToken:key", "@UserTokenSecret:key"]).then(async stores => {
+      twitter.setAccessToken(stores[0][1], stores[1][1]);
 
       try {
         const user = await twitter.get("account/verify_credentials.json", {
@@ -76,9 +70,9 @@ export class LoginScreen extends React.Component {
       } catch (err) {
         console.log(err);
       }
-    })
+    });
 
-    console.log('user: %o', this.props.user);
+    console.log("user: %o", this.props.user);
   }
 
   onGetAccessToken = ({ oauth_token, oauth_token_secret }) => {
@@ -93,12 +87,8 @@ export class LoginScreen extends React.Component {
       }
     );
 
-    storeData(
-      "@UserToken:key", oauth_token
-    );
-    storeData(
-      "@UserTokenSecret:key", oauth_token_secret
-    );
+    storeData("@UserToken:key", oauth_token);
+    storeData("@UserTokenSecret:key", oauth_token_secret);
   };
 
   onSuccess = user => {

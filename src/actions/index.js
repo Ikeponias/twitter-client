@@ -7,9 +7,9 @@ export const tokenSet = (token, tokenSecret) => ({
   tokenSecret: tokenSecret
 });
 
-export const userSet = (user) => ({
+export const userSet = user => ({
   type: actionTypes.USER_SET,
-  user,
+  user
 });
 
 export const storeToken = (token, tokenSecret) => ({
@@ -19,13 +19,13 @@ export const storeToken = (token, tokenSecret) => ({
 });
 
 export const fetchToken = () => ({
-  type: actionTypes.FETCH_TOKEN,
+  type: actionTypes.FETCH_TOKEN
 });
 
 // tweet
 export const myTimelineGet = () => ({
-  type: actionTypes.MY_TIMELINE_GET,
+  type: actionTypes.MY_TIMELINE_GET
 });
 export const tweetPost = () => ({
-  type: actionTypes.TWEET_POST,
+  type: actionTypes.TWEET_POST
 });

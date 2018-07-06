@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, Alert, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import RootTabs from "../navigation/RootTabs";
 
 export default class TwitterScreen extends Component {
   static navigationOptions = {
-    　header: null,
+    header: null
   };
 
   render() {

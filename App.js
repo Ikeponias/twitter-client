@@ -34,10 +34,7 @@ export default class App extends React.Component {
         require("./assets/images/icon.png"),
         require("./assets/images/ok_man.png")
       ]),
-      twitter.setConsumerKey(
-        ENV.consumerKey,
-        ENV.consumerKeySecret
-      )
+      twitter.setConsumerKey(ENV.consumerKey, ENV.consumerKeySecret)
     ]);
   };
 }

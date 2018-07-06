@@ -7,9 +7,6 @@ const middleware = createReactNavigationReduxMiddleware(
   state => state.nav
 );
 
-const store = createStore(
-  reducers,
-  applyMiddleware(middleware)
-);
+const store = createStore(reducers, applyMiddleware(middleware));
 
 export default store;
