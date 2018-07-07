@@ -60,6 +60,10 @@ export default class TweetComponent extends Component {
               <Icon type="FontAwesome" name="retweet" />
               <Text>{item.retweet_count} retweets</Text>
             </Button>
+            <Button transparent textStyle={{ color: "#87838B" }}>
+              <Icon type="Ionicons" name="heart" />
+              <Text>{item.favorite_count} favorites</Text>
+            </Button>
           </Left>
         </CardItem>
       </Card>

@@ -5,7 +5,6 @@ import LoginScreen from "../screens/LoginScreen";
 import TwitterScreen from "../screens/TwitterScreen";
 import { connect } from "react-redux";
 
-/* AppNavigator */
 export const AppNavigator = StackNavigator({
   Login: { screen: LoginScreen },
   TwitterHome: { screen: TwitterScreen }
