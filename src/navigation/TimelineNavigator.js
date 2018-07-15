@@ -1,20 +1,20 @@
-import { createStackNavigator } from "react-navigation";
+import { StackNavigator } from 'react-navigation'
 
-import TimelineScreen from "../screens/TimelineScreen";
+import TimelineScreen from '../screens/TimelineScreen'
 
-const TimelineNavigator = createStackNavigator({
+const TimelineNavigator = StackNavigator({
   Home: {
     screen: TimelineScreen,
     navigationOptions: {
-      title: "タイムライン",
+      title: 'タイムライン',
       headerStyle: {
-        backgroundColor: "#16a085"
+        backgroundColor: '#16a085'
       },
       headerTitleStyle: {
-        color: "white"
+        color: 'white'
       }
     }
   }
-});
+})
 
-export default TimelineNavigator;
+export default TimelineNavigator

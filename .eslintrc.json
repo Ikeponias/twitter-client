@@ -1,3 +1,25 @@
 {
-    "extends": "standard"
+    "parser": "babel-eslint",
+    "extends": "standard",
+    "settings": {
+        "react": {
+          "createClass": "createReactClass",
+          "pragma": "React",
+          "version": "15.0",
+          "flowVersion": "0.53"
+        },
+        "propWrapperFunctions": [ "forbidExtraProps" ] 
+    },
+    "plugins": [
+        "react"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+          "jsx": true
+        }
+    },
+    "rules": {
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error"
+    }
 }

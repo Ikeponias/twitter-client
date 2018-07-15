@@ -1,18 +1,18 @@
-import React from "react";
-import { createBottomTabNavigator } from "react-navigation";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import React from 'react'
+import { TabNavigator } from 'react-navigation'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import TimelineNavigator from "./TimelineNavigator";
-import PostTweetNavigator from "./PostTweetNavigator";
+import TimelineNavigator from './TimelineNavigator'
+import PostTweetNavigator from './PostTweetNavigator'
 
-const RootTabs = createBottomTabNavigator({
+const RootTabs = TabNavigator({
   Timeline: {
     screen: TimelineNavigator,
     navigationOptions: {
-      tabBarLabel: "GET",
+      tabBarLabel: 'GET',
       tabBarIcon: ({ tintColor, focused }) => (
         <Ionicons
-          name={focused ? "ios-list-box" : "ios-list-box-outline"}
+          name={focused ? 'ios-list-box' : 'ios-list-box-outline'}
           size={26}
           style={{ color: tintColor }}
         />
@@ -22,16 +22,16 @@ const RootTabs = createBottomTabNavigator({
   Tweet: {
     screen: PostTweetNavigator,
     navigationOptions: {
-      tabBarLabel: "POST",
+      tabBarLabel: 'POST',
       tabBarIcon: ({ tintColor, focused }) => (
         <Ionicons
-          name={focused ? "ios-create" : "ios-create-outline"}
+          name={focused ? 'ios-create' : 'ios-create-outline'}
           size={26}
           style={{ color: tintColor }}
         />
       )
     }
   }
-});
+})
 
-export default RootTabs;
+export default RootTabs

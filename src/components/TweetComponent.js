@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Image } from "react-native";
+import React, { Component } from 'react'
+import { Image } from 'react-native'
 import {
   Card,
   CardItem,
@@ -9,15 +9,11 @@ import {
   Icon,
   Left,
   Body
-} from "native-base";
+} from 'native-base'
 
 export default class TweetComponent extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const { item } = this.props;
+  render () {
+    const { item } = this.props
 
     return (
       <Card style={{ flex: 0 }}>
@@ -49,24 +45,24 @@ export default class TweetComponent extends Component {
                     style={{ width: 200, height: 200 }}
                     source={{ uri: m.media_url_https }}
                   />
-                );
+                )
               })}
             <Text>{item.text}</Text>
           </Body>
         </CardItem>
         <CardItem>
           <Left>
-            <Button transparent textStyle={{ color: "#87838B" }}>
+            <Button transparent textStyle={{ color: '#87838B' }}>
               <Icon type="FontAwesome" name="retweet" />
               <Text>{item.retweet_count} retweets</Text>
             </Button>
-            <Button transparent textStyle={{ color: "#87838B" }}>
+            <Button transparent textStyle={{ color: '#87838B' }}>
               <Icon type="Ionicons" name="heart" />
               <Text>{item.favorite_count} favorites</Text>
             </Button>
           </Left>
         </CardItem>
       </Card>
-    );
+    )
   }
 }

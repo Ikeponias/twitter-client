@@ -1,38 +1,38 @@
-import React from "react";
-import { StyleSheet } from "react-native";
-import { connect } from "react-redux";
-import twitter from "react-native-simple-twitter";
+import React from 'react'
+import { StyleSheet } from 'react-native'
+import { connect } from 'react-redux'
+import twitter from 'react-native-simple-twitter'
 
-import PostTweetComponent from "../components/PostTweetComponent";
+import PostTweetComponent from '../components/PostTweetComponent'
 
 connect(state => ({
   user: state.user
-}));
+}))
 export default class PostScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
-    const { state, setParams } = navigation;
-    const { params = {} } = navigation.state;
+    const { state, setParams } = navigation
+    const { params = {} } = navigation.state
   };
 
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
   }
 
-  postTweet(text) {
+  postTweet (text) {
     const postParams = {
-      status: "API投稿テスト"
-    };
+      status: 'API投稿テスト'
+    }
 
-    postParams.status = text;
+    postParams.status = text
     twitter
-      .post("statuses/update.json", postParams)
+      .post('statuses/update.json', postParams)
       .then(response => {
-        console.log(response);
+        console.log(response)
       })
-      .catch(error => console.log(error));
+      .catch(error => console.log(error))
   }
 
-  render() {
+  render () {
     return (
       <PostTweetComponent onPress={this.postTweet} />
       /*
@@ -49,7 +49,7 @@ export default class PostScreen extends React.Component {
         </View>
       </View>
       */
-    );
+    )
   }
 }
 
@@ -62,9 +62,9 @@ const styles = StyleSheet.create({
     padding: 32
   },
   name: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 16
   },
   description: {
@@ -72,12 +72,12 @@ const styles = StyleSheet.create({
     marginBottom: 16
   },
   button: {
-    backgroundColor: "#1da1f2",
+    backgroundColor: '#1da1f2',
     paddingVertical: 16
   },
   buttonText: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 16,
-    color: "#fff"
+    color: '#fff'
   }
-});
+})

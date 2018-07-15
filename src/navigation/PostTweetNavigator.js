@@ -1,20 +1,20 @@
-import { createStackNavigator } from "react-navigation";
+import { StackNavigator } from 'react-navigation'
 
-import PostScreen from "../screens/PostScreen";
+import PostScreen from '../screens/PostScreen'
 
-const PostTweetNavigator = createStackNavigator({
+const PostTweetNavigator = StackNavigator({
   Home: {
     screen: PostScreen,
     navigationOptions: {
-      headerTitle: "ツイート投稿",
+      headerTitle: 'ツイート投稿',
       headerStyle: {
-        backgroundColor: "#16a085"
+        backgroundColor: '#16a085'
       },
       headerTitleStyle: {
-        color: "white"
+        color: 'white'
       }
     }
   }
-});
+})
 
-export default PostTweetNavigator;
+export default PostTweetNavigator

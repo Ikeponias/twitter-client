@@ -1,34 +1,34 @@
-import React, { Component } from "react";
-import { Container, Content, Input, Form, Button, Text } from "native-base";
-import styled from "styled-components";
+import React, { Component } from 'react'
+import { Container, Content, Input, Form, Button, Text } from 'native-base'
+import styled from 'styled-components'
 
 const TweetInput = styled(Input)`
   border-width: 1px;
   background: #ffffff;
   min-height: 40px;
   margin: 5px;
-`;
+`
 
 export default class PostTweetContainer extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     this.state = {
-      text: ""
-    };
+      text: ''
+    }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate (nextProps, nextState) {
     if (this.state.value !== nextState.value) {
-      return false;
+      return false
     }
 
-    return true;
+    return true
   }
 
-  render() {
-    const { onPress } = this.props;
-    const { text } = this.state;
+  render () {
+    const { onPress } = this.props
+    const { text } = this.state
     return (
       <Container>
         <Content padder>
@@ -46,6 +46,6 @@ export default class PostTweetContainer extends Component {
           </Form>
         </Content>
       </Container>
-    );
+    )
   }
 }
